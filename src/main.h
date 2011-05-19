@@ -24,9 +24,6 @@ class CBlockIndex;
 class CWalletTx;
 class CKeyItem;
 
-void SetMaxMoney(int64 nValue); 
-int64 GetMaxMoney();
-
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 static const int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
@@ -34,7 +31,7 @@ static const int64 COIN = 100000000;
 static const int64 CENT = 1000000;
 static const int64 MIN_TX_FEE = 50000;
 static const int64 MAX_MONEY = 21000000 * COIN;
-inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= GetMaxMoney()); }
+inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 static const int COINBASE_MATURITY = 100;
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
@@ -113,6 +110,9 @@ void BitcoinMiner();
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 bool IsInitialBlockDownload();
 std::string GetWarnings(std::string strFor);
+
+
+
 
 
 
@@ -633,15 +633,16 @@ public:
         if (nBlockSize != 1 && nNewBlockSize >= MAX_BLOCK_SIZE_GEN/2)
         {
             if (nNewBlockSize >= MAX_BLOCK_SIZE_GEN)
-                return GetMaxMoney();               
+                return MAX_MONEY;
             nMinFee *= MAX_BLOCK_SIZE_GEN / (MAX_BLOCK_SIZE_GEN - nNewBlockSize);
         }
 
         if (!MoneyRange(nMinFee))
-            nMinFee = GetMaxMoney();          
+            nMinFee = MAX_MONEY;
         return nMinFee;
     }
-   
+
+
     bool ReadFromDisk(CDiskTxPos pos, FILE** pfileRet=NULL)
     {
         CAutoFile filein = OpenBlockFile(pos.nFile, 0, pfileRet ? "rb+" : "rb");
