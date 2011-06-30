@@ -5,6 +5,9 @@ rpcpassword=yourpassword
 rpcuser=yourusername
 printtoconsole=1
 testnet=1
+
+dns=1
+addnode=exchange.beertokens.info
 #addnode=192.168.2.143
 #connect=192.168.2.158
 # listen port can now be set to other than 18333 for testnet or proto nets 
