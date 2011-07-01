@@ -250,7 +250,7 @@ bool AppInit2(int argc, char* argv[])
     fTestNet_config = GetBoolArg("-testnet_config");
     fNoListen = GetBoolArg("-nolisten");
     fLogTimestamps = GetBoolArg("-logtimestamps");
-     
+    uAddressVersion = GetCharArg(ADDRESSVERSION,"-AddressVerson");
     if (mapArgs.count("-max_money"))
         SetMaxMoney(atoi(mapArgs["-max_money"]));
 

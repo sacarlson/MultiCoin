@@ -14,6 +14,9 @@ port=28333
 # for the values bellow testnet_config line to be used testnet_config=1 must be set
 testnet_config=1
 
+#AddressVersion is the 8 bit (char) 0 - 255 header code appended to the first 8 bits of the send address default is 0 for main 111 for testnet 
+#AddressVerson=244
+
 #check_block is a block to verify the integrity up to this block number used with check_hash if not set it's not checked
 #check_block=15
 

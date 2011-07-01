@@ -30,6 +30,7 @@ bool fTestNet = false;
 bool fTestNet_config = false;
 bool fNoListen = false;
 bool fLogTimestamps = false;
+char uAddressVersion = 0;
 
 
 
