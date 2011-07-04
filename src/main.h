@@ -27,6 +27,9 @@ class CRequestTracker;
 class CNode;
 class CBlockIndex;
 
+void SetMaxMoney(int64 nValue); 
+int64 GetMaxMoney();
+
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 static const int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
@@ -35,7 +38,7 @@ static const int64 CENT = 1000000;
 static const int64 MIN_TX_FEE = 50000;
 static const int64 MIN_RELAY_TX_FEE = 10000;
 static const int64 MAX_MONEY = 21000000 * COIN;
-inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= GetMaxMoney()); }
 static const int COINBASE_MATURITY = 100;
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
@@ -559,16 +562,15 @@ public:
         if (nBlockSize != 1 && nNewBlockSize >= MAX_BLOCK_SIZE_GEN/2)
         {
             if (nNewBlockSize >= MAX_BLOCK_SIZE_GEN)
-                return MAX_MONEY;
+                return GetMaxMoney();               
             nMinFee *= MAX_BLOCK_SIZE_GEN / (MAX_BLOCK_SIZE_GEN - nNewBlockSize);
         }
 
         if (!MoneyRange(nMinFee))
-            nMinFee = MAX_MONEY;
+            nMinFee = GetMaxMoney();          
         return nMinFee;
     }
-
-
+   
     bool ReadFromDisk(CDiskTxPos pos, FILE** pfileRet=NULL)
     {
         CAutoFile filein = OpenBlockFile(pos.nFile, 0, pfileRet ? "rb+" : "rb");

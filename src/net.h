@@ -22,7 +22,7 @@ extern int nBestHeight;
 extern int nConnectTimeout;
 
 
-
+unsigned short GetSendPort();
 inline unsigned short GetDefaultPort() { return fTestNet ? 18333 : 8333; }
 static const unsigned int PUBLISH_HOPS = 5;
 enum
@@ -169,7 +169,7 @@ public:
     {
         Init();
         ip = ipIn;
-        port = htons(portIn == 0 ? GetDefaultPort() : portIn);
+        port = htons(portIn == 0 ? GetSendPort() : portIn);
         nServices = nServicesIn;
     }
 
@@ -210,7 +210,7 @@ public:
         nServices = NODE_NETWORK;
         memcpy(pchReserved, pchIPv4, sizeof(pchReserved));
         ip = INADDR_NONE;
-        port = htons(GetDefaultPort());
+        port = htons(GetSendPort());
         nTime = 100000000;
         nLastTry = 0;
     }
