@@ -180,6 +180,7 @@ inline bool AddressToHash160(const char* psz, uint160& hash160Ret)
     if (vch.size() != sizeof(hash160Ret) + 1)
         return false;
     memcpy(&hash160Ret, &vch[1], sizeof(hash160Ret));
+    printf("uAddressVersion = %d  nVersion = %d \n",uAddressVersion,nVersion);
     return (nVersion <= uAddressVersion);
 }
 

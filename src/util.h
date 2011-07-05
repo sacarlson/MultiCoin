@@ -172,7 +172,7 @@ extern bool fTestNet;
 extern bool fTestNet_config;
 extern bool fNoListen;
 extern bool fLogTimestamps;
-extern char uAddressVersion;
+extern unsigned char uAddressVersion;
 
 void RandAddSeed();
 void RandAddSeedPerfmon();
@@ -459,19 +459,19 @@ inline bool GetBoolArg(const std::string& strArg)
 }
 
 // GetCharArg(111,"-Subsidy");
-inline char GetCharArg(unsigned char udefault, const char* argument)
+inline unsigned char GetCharArg(unsigned char udefault, const std::string& strArg)
 {   
-    if (mapArgs.count(argument))
+    if (mapArgs.count(strArg))
     {                    
         unsigned char uvalue;  
-        uvalue = atoi(mapArgs[argument]);          
+        uvalue = atoi(mapArgs[strArg]);          
         //stringstream convert(mapArgs[argument]);
         //if ( !(convert >> uvalue)) 
         //    uvalue = 0;
-        printf("argument %s  found in bitcoin.conf with uint %u being used  \n",argument,uvalue);
+        //printf("argument %s  found in bitcoin.conf with uint %u being used  \n",strArg,uvalue);
         return uvalue;
     }
-    printf("argument %s  NOT found in bitcoin.conf so default uint %u being used  \n",argument,udefault);
+    //printf("argument %s  NOT found in bitcoin.conf so default uint %u being used  \n",strArg,udefault);
     return udefault;
 }
 
