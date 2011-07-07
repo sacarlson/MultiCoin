@@ -1,0 +1,90 @@
+# this is an example showing you can run mainnet btc from testnet mode in MultiCoin if it's specs to the same specs for BTC
+# this also shows an example of how to use the custom pscMessageStart0 - 3 settings to modify message start string
+
+rpcpassword=yourpassword
+rpcuser=yourusername
+printtoconsole=1
+testnet=1
+
+# to add luke-jr minner node to hope to enable escrow in main net
+#dns=1
+#addnode=relay.eligius.st
+
+# listen port can now be set to other than 18333 for testnet on proto nets 
+#port=38333
+port=8333
+
+# send port is the address port we will be sending to each node, the other nodes must be listening on this port
+#portsend=38333
+portsend=8333
+
+# rpcport will also be changed for mainnet here
+#rpcport=38332
+rpcport=8332
+
+#only connect to standard ports assigned at port config or as assigned by testnet or mainnet defaults 
+#standard_ports_only=1
+
+paytxfee=.0015
+
+# for the values bellow testnet_config line to be used testnet_config=1 must be set
+testnet_config=1
+
+#AddressVersion is the 8 bit (char) 0 - 255 header code appended to the first 8 bits of the send address default is 0 for main 111 for testnet 
+AddressVerson=0
+
+#my new Pbtc pszTimestamp for  as found on google seen on front page of New York Times paper
+#pszTimestamp="New York Times 1/Jul/11 page 1, U.S. Will Widen 2 C.I.A. Inquiries Into Jail Deaths"
+pszTimestamp=The Times 03/Jan/2009 Chancellor on brink of second bailout for banks
+
+#these values must be with value 0x to the front to make hex format
+#pbtc block.hashMerkleRoot value
+#block_hashMerkleRoot=0xd597477ef4dac6078bebd0240be7da16556ba881f047823791ddc83676d16fde
+block_hashMerkleRoot=0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b
+
+#pbtc new genesisblock 
+#genesisblock=0x00000004d621bf2f4e8209d56371b456a0181018f9416142c7a7f8a0b6f976fa
+genesisblock=0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+
+#Pbtc new block.ntime  time epoc use date +%s to get this number before you create a new chain
+#block_nTime=1309517065
+block_nTime=1231006505
+
+#Pbtc new block.nNonce
+#block_nNonce=1109660235
+block_nNonce=2083236893
+
+#Pbtc new block.nBits  difficulty setting  this value must be converted to decimal at this point
+#block_nBits=0x1d00ffff
+block_nBits=486604799
+
+# IRC channel to use if you want something other than #bitcoin or #bitcoinTEST skip adding the # to the name
+irc_channel=bitcoin
+
+# IRC address  can be a dns lookupable address pointing to your irc server
+# this seems to be the one that's being used not the above address
+irc_address=irc.lfnet.org 
+
+#COINBASE_MATURITY defaults to 100 if changed here will credit minned coins in this number of new blocks 
+coinbase_maturity=100
+
+#The message start string is designed to be unlikely to occur in normal data.
+#The characters are rarely used upper ascii, not valid as UTF-8, and produce
+# a large 4-byte int at any alignment.
+# measage start string 0 - 3  here it's set testnet settings, will default to normal settings
+#  these are the testnet settings
+#pscMessageStart0=250
+#pscMessageStart1=191
+#pscMessageStart2=181
+#pscMessageStart3=218
+# mainnet settings
+#{ 0xf9, 0xbe, 0xb4, 0xd9 }
+pscMessageStart0=249
+pscMessageStart1=190
+pscMessageStart2=180
+pscMessageStart3=217
+
+
+
+
+

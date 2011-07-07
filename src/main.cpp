@@ -1598,10 +1598,15 @@ bool LoadBlockIndex(bool fAllowNew)
             printf("testnet original hashGenesisBlock assigned for ver 2.20.0 \n");
         }
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 28);
-        pchMessageStart[0] = 0xfa;
-        pchMessageStart[1] = 0xbf;
-        pchMessageStart[2] = 0xb5;
-        pchMessageStart[3] = 0xda;
+        pchMessageStart[0] = GetCharArg(0xfa,"-pscMessageStart0");
+        pchMessageStart[1] = GetCharArg(0xbf,"-pscMessageStart1");
+        pchMessageStart[2] = GetCharArg(0xb5,"-pscMessageStart2");
+        pchMessageStart[3] = GetCharArg(0xda,"-pscMessageStart3");
+
+        //pchMessageStart[0] = 0xfa;
+        //pchMessageStart[1] = 0xbf;
+        //pchMessageStart[2] = 0xb5;
+        //pchMessageStart[3] = 0xda;
     }
     printf("hashGenesisBlock is now ");
     printf("%s\n", hashGenesisBlock.ToString().c_str());
@@ -1635,7 +1640,7 @@ bool LoadBlockIndex(bool fAllowNew)
         {
             pszTimestamp = mapArgs["-pszTimestamp"].c_str();
         }
-        printf(" pszTimestamp = %s \n", pszTimestamp);
+        printf(" pszTimestamp = >%s<\n", pszTimestamp);
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -1686,6 +1691,7 @@ bool LoadBlockIndex(bool fAllowNew)
          
        printf("block.nTime = %u \n", block.nTime);
        printf("block.nBits = %u \n", block.nBits);
+       printf("block.nBits hex = %x \n", block.nBits);
        printf("block.nNonce = %u \n", block.nNonce);
 
        if (fTestNet_config && mapArgs.count("-gennewblock"))
@@ -1723,7 +1729,6 @@ bool LoadBlockIndex(bool fAllowNew)
         block.print();
         printf("block.GetHash() = %s \n", block.GetHash().ToString().c_str());
         assert(block.GetHash() == hashGenesisBlock);
-
         // Start new block file
         unsigned int nFile;
         unsigned int nBlockPos;
