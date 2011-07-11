@@ -1,0 +1,145 @@
+Hello everyone,
+
+after a discussion on IRC, we decided to try to standardize the version bytes
+used by bitcoin for several applications.
+
+There are 3 components that seem meaningful:
+* network? (realnet, testnet, alternate chains?)
+* data class? (address, private key, master key, ...?)
+* version? (real version, per data class defined)
+
+There is no technical reason why different network and different data classes
+would need separate version bytes, but i think it is a good thing to keep
+them from colliding. People will mix them up, and when things are well
+defined, a nice warning message could help a lot ("Oops it seems you entered
+a private key instead of an address!").
+
+So, first of all, there is already one actually used alternate chain, namely
+namecoin, using version byte 52 for addresses. For this reason, i'd like to
+reserve bit 16 in the version byte for "alternate chain". When bit 16 is set,
+everything is up to the network itself, and no further semantics are defined.
+
+When bit 16 isn't set:
+
+Then remains the rest of the network. The problem is that testnet already uses
+version 111, which is not a single bit. We can use a trick though, namely
+choosing bit 1 for testnet, and if bit 1 is set, XOR the rest of the version
+number with 111. Otherwise, we could reset testnet (not actually reset, just
+change its addresses a bit), and simply state odd=testnet, even=realnet.
+
+That leaves use with 6 more bits to play with, namely 128,64,32 and 8,4,2.
+As 128 is already used for private keys, let's use (128,64,32) for data classes,
+and (8,4,2) for versions.
+
+So, in full:
+* Bits 128/64/32 define data class
+** 0 = address
+** 32,64,96,160,192 = reserved for future use
+** 128 = private key
+** 224 = extended data class, another "data class" byte follows
+* Bit 16 defines "private"
+** 0 = bitcoin
+** 16 = alternate chain
+* Bits 8/4/2 define version number
+** 0 = only thing used for now
+** 2,4,6,8,10,12 = reserved for future use
+** 14 = extended version, another version byte follows
+* Bit 1 defines testnet
+** 0 = realnet
+** 1 = testnet (possibly using XOR 111, if not reset)
+
+This whole discussion started when Stefan wanted to define a format for master keys from which
+to derive deterministic wallet keys, i suggest using data class 192 for that, leaving the
+lower numbers for more basic data, like public keys.
+
+Any comments?
+
+-- 
+Pieter
+
+I realize my mail may have been a bit unclear. This is about the version bytes
+used in addresses and other base58-encoded data structures. I'd like to see some
+convention adopted before everyone starts defining their own.
+
+The proposal in the previous mail could be summarized by the following functions
+(for non-alternate chains). It is compatible with all currently-used version bytes
+that i know of (testnet, realnet, addresses, private keys, namecoin, multicoin):
+
+enum dataclass_t 
+{
+    address = 0,
+    privkey = 4,
+    masterkey = 6,
+    extended = 7
+}
+
+int EncodeVersionByte(dataclass_t class, int nVersion, bool fTestNet)
+{
+    return (class << 5 + nVersion << 1) ^ fTestNet*111;
+}
+
+void DecodeVersionByte(int nByte, dataclass_t& class, int& nVersion, bool& fTestNet)
+{
+    fTestNet = false;
+    if (nByte & 1)
+    {
+        fTestNet = true;
+        nByte ^= 111;
+    }
+    class = (nByte & 224) >> 5;
+    nVersion = (nByte & 14) >> 1;
+}
+
+-- 
+Pieter
+
+added by sacarlson:
+as far as creating and testing alternate block chain to simplify just make sure your address is grater than 16 
+and not to include at present:
+111 = testnet
+224 = extended class
+
+at present these addresses are known to  have been used on other projects and fall into the private class:
+243 = weeds
+244 = groupcoin
+245 = groupcoinTEST
+
+(06:28:29 PM) sacarlson: I plan to follow and have added a copy to my release of Multicoin for this new address version spec http://sourceforge.net/mailarchive/forum.php?thread_name=20110707111557.GA5231%40ulyssis.org&forum_name=bitcoin-development
+(06:28:33 PM) minus: well as long as there's people having fun with trojan FTPs it's fine i guess
+(06:30:02 PM) sacarlson: if I understand the spec as far as I need for alternate blocks would be to make sure that my address are over equal or grater than 16 and not 111, is this correct?
+(06:31:14 PM) sacarlson: a no responce will be considered a yes
+(06:35:44 PM) sipa: sacarlson: according to my proposal, you're free to choose anything that has bit 16 set
+(06:36:02 PM) sacarlson: sipa: cool will do 
+(06:36:12 PM) sipa: so there are 128 numbers to choose from
+(06:36:16 PM) sacarlson: sipa: sound like a good idea to me
+(06:36:30 PM) sacarlson: sipa: plus the extended
+(06:37:09 PM) sipa: ?
+(06:37:45 PM) sacarlson: sipa: ** 224 = extended data class, another "data class" byte follows
+(06:38:17 PM) sipa: sacarlson: yes, if you're talking about data that is useful in the main bitcoin chain, but is not an address or key
+(06:38:23 PM) sacarlson: so if the code for 224 then another byte is added to provide 64k
+(06:38:51 PM) sipa: less, actually, since the first is always 224
+(06:39:38 PM) sacarlson: sipa: well then I will random pick one of the alternate address as an extended code to provide for expansion
+(06:40:05 PM) sipa: sure, you can define extensions within the private range as well
+(06:41:17 PM) sacarlson: sipa: oh you defin private if bit 5 is set?
+(06:41:28 PM) sacarlson: sipa: as you call it 16
+(06:42:16 PM) sacarlson: opps brain fart  ** 128 = private key
+(06:43:15 PM) sacarlson: so binary 10000000
+(06:43:16 PM) sipa: valid "private" version numbers would be: 16-31, 48-63, 144-159, 176-191, ...
+(06:43:33 PM) sipa: (nVersion & 0x10) should be nonzero
+(06:44:31 PM) sacarlson: ok so my present selected 243 is a 11110011 that falls into the private class
+(06:45:08 PM) sipa: indeed
+(06:46:09 PM) sacarlson: sipa: I guess that I'm safe to play there then for now and figure out an extended spec at some later time
+(06:46:34 PM) sipa: sure
+(06:46:55 PM) sacarlson: sipa: ok thank you sir
+(06:47:18 PM) sipa: don't call me that
+(06:47:20 PM) sipa: :)
+(06:58:00 PM) sacarlson: sipa: oh I think I have a better understanding of ** 224 = extended data class so with this we are still only define at most 510 address
+(06:58:57 PM) sipa: depends, but the 'extended' thing is not really well specified now
+(06:59:10 PM) sacarlson: sipa: ok
+(06:59:26 PM) sipa: you could say that when both data class is 224, and version is 14, you get 2 extra bytes
+(07:00:05 PM) sacarlson: sipa: ya extended extended
+(07:03:22 PM) sacarlson: sipa: and to make it almost  infinite 224 and version is 15 your next is byte could be number of extra bytes to add 
+(07:03:53 PM) sipa: haha, possibly
+(07:04:32 PM) sacarlson: ok I'll stick that in my docs page of multicoin to make sure people don't think there will be a finite number
+
+
