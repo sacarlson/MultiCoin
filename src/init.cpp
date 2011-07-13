@@ -256,8 +256,6 @@ bool AppInit2(int argc, char* argv[])
     if (mapArgs.count("-max_money"))
         SetMaxMoney(atoi(mapArgs["-max_money"]));
 
-    printf("MaxMoney now set to %lld  or hex %0I64x  \n",GetMaxMoney(),GetMaxMoney());
-    
     for (int i = 1; i < argc; i++)
         if (!IsSwitchChar(argv[i][0]))
             fCommandLine = true;

@@ -77,6 +77,30 @@ irc_tor_address=card.freenode.net
 #COINBASE_MATURITY defaults to 100 if changed here will credit minned coins in this number of new blocks 
 coinbase_maturity=2
 
+#The message start string is designed to be unlikely to occur in normal data.
+#The characters are rarely used upper ascii, not valid as UTF-8, and produce
+# a large 4-byte int at any alignment.
+# measage start string 0 - 3  here it's set testnet settings, will default to normal settings
+# examples namecoin settings in hex
+#\xf9\xbe\xb4\xfe
+#  these are the testnet settings
+#\xfa\xbf\xb5\xda
+#pscMessageStart0=250
+#pscMessageStart1=191
+#pscMessageStart2=181
+#pscMessageStart3=218
+#  mainnet settings
+#{ 0xf9, 0xbe, 0xb4, 0xd9 }
+#pscMessageStart0=249
+#pscMessageStart1=190
+#pscMessageStart2=180
+#pscMessageStart3=217
+#  weeds settings
+#\xf8\xbf\xb5\xda
+pscMessageStart0=248
+pscMessageStart1=191
+pscMessageStart2=181
+pscMessageStart3=218
 
 
 
