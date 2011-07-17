@@ -1,0 +1,87 @@
+#this is a test with namecoin cypto chain specs for MultiCoin not fully tested yet
+
+rpcpassword=yourpassword
+rpcuser=yourusername
+printtoconsole=1
+testnet=1
+
+# to add nodes if needed
+#dns=1
+#addnode=relay.eligius.st
+
+# listen port can now be set to other than 18333 for testnet on proto nets nX
+port=8334
+
+# send port is the address port we will be sending to each node, the other nodes must be listening on this port nX
+portsend=8334
+
+# rpcport will also be changed for namecoin here
+rpcport=48332
+
+#only connect to standard ports assigned at port config or as assigned by testnet or mainnet defaults 
+#standard_ports_only=1
+
+paytxfee=.0005
+
+# for the values bellow testnet_config line to be used testnet_config=1 must be set
+testnet_config=1
+
+# nX
+#AddressVersion is the 8 bit (char) 0 - 255 header code appended to the first 8 bits of the send address default is 0 for main 111 for testnet 
+AddressVerson=52
+
+#my new Pbtc pszTimestamp for namecoin as found on in namecoin source nX
+pszTimestamp=... choose what comes next.  Lives of your own, or a return to chains. -- V
+
+#these values must be with value 0x to the front to make hex format nX I guess namecoin has none? nX
+#pbtc block.hashMerkleRoot value
+block_hashMerkleRoot=0x41c62dbd9068c89a449525e3cd5ac61b20ece28c3c38b3f35b2161f0e6d3cb0d
+
+#pbtc new genesisblock nX
+genesisblock=0x000000000062b72c5e2ceb45fbc8587e807c155b0da735e6483dfba2f0a9c770
+
+#Pbtc new block.ntime  time epoc use date +%s to get this number before you create a new chain nX
+block_nTime=1303000001
+
+#Pbtc new block.nNonce nX
+#0xa21ea192U
+block_nNonce=2719916434
+
+#Pbtc new block.nBits  difficulty setting  this value must be converted to decimal at this point nX
+#0x1c007fff
+block_nBits=469794815
+
+# IRC channel to use if you want something other than #bitcoin or #bitcoinTEST skip adding the # to the name nX
+irc_channel=namecoin
+
+# IRC address  can be a dns lookupable address pointing to your irc server nX
+# this seems to be the one that's being used not the above address
+irc_address=irc.lfnet.org 
+
+#COINBASE_MATURITY defaults to 100 if changed here will credit minned coins in this number of new blocks nX?
+coinbase_maturity=100
+
+#The message start string is designed to be unlikely to occur in normal data. nX
+#The characters are rarely used upper ascii, not valid as UTF-8, and produce
+# a large 4-byte int at any alignment.
+# measage start string 0 - 3  here it's set testnet settings, will default to normal settings
+# namecoin main settings
+#{ 0f9, 0xbe, 0xb4, 0xfe }
+pscMessageStart0=249
+pscMessageStart1=190
+pscMessageStart2=180
+pscMessageStart3=254
+
+#values bellow require Multicoin versions commited at or after 7/17/11 for the new namecoin config options 
+
+#scriptPubKey is a big hex string with no 0x at the head, was always the same in bitcoin for testnet and main in namecoin it's changed
+scriptPubKey=04b620369050cd899ffbbc4e8ee51e8c4534a855bb463439d63d235d4779685d8b6f4870a238cf365ac94fa13ef9a2a22cd99d0d5ee86dcabcafce36c7acf43ce5
+
+#scriptSig_block.nBits seems I was in error when creating weeds and now find that this value should have changed depending on nBits settings
+# in reality we shouldn't need this value it should be the same as block_nBits=469794815 as it is here
+scriptSig_block_nBits=469794815
+
+#this is an unknown value found changed in namecoin at GenesisBlock file creation time default was 4 for bitcoin main and testnet
+# and  NAME_COIN_GENESIS_EXTRA = 521; but not sure why it also gets ++extra incremented on the line that it's used so try 3 for others
+GenesisBlock_extra=521
+
