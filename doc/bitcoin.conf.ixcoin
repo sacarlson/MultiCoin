@@ -1,0 +1,144 @@
+#this is the specs for the Ixcoin crypto currency (main)  must have multicoin release >= 8/12/11
+
+rpcpassword=yourpassword
+rpcuser=yourusername
+printtoconsole=1
+testnet=1
+
+dns=1
+addnode=www.beertokens.info
+addnode=192.168.2.158
+addnode=70.173.223.23
+addnode=203.122.241.139
+
+#addnode=192.168.2.250
+#connect=192.168.2.158
+#noirc=1
+# listen port can now be set to other than 18333 for testnet or proto nets 
+port=8337
+
+# send port is the address port we will be sending to each node, the nodes must be listening on this port
+portsend=8337
+
+# rpcport is also changed 
+rpcport=8338
+
+
+#in Multicoin-qt this defineds the title on top of the gui window box
+WindowTitle="Ixcoin Wallet"
+
+#in Multicoin-qt this is the CoinName seen on the top of the gui window
+CoinName="[IXC]"
+
+#in Multicoin-qt this is the name of the graphic icon file displayed in the top left corner of the gui window
+# you must put a compatible graphic image into the :icons/ dir for this to work like png 
+#for this to work you will also have to add the image file names to the bitcoin.qrc file and compile
+#WindowIcon=:icons/ixcoin
+
+# temp change to test multicoin-qt with groupcoin spec add header
+#AddressVersion is the 8 bit (char) 0 - 255 header code appended to the first 8 bits of the send address default is 0 for main 111 for testnet 
+AddressVerson=138
+
+#only connect to standard ports assigned at port config or as assigned by testnet or mainnet defaults 
+standard_ports_only=1
+
+#paytxfee=.001
+
+# for the values bellow testnet_config line to be used testnet_config=1 must be set
+testnet_config=1
+
+#check_block is a block to verify the integrity up to this block number used with check_hash if not set it's not checked
+#check_block=2014
+#check_block=2015
+#check_block=2016
+check_block=16200
+
+
+#check_hash is the hash value of the check_block number used to verify integrity of block chain
+#check_hash=0x000000004a0aed8f688ee3a272b2fbf8447404235643765444b9b0b2c8fe8d86
+#check_hash=0x000000002fcbb9a84492f2076f83ac276304fd21a412707ce96dbf386e248b47
+#check_hash=0x000000004525bb2a5ccbf5c85ce7f2c7a5a2a99a7c079835420fc57a485cdd50
+check_hash=0x00000000000898dc087265c0570a7190b0866c73a8e97c5fe73afb9912b03533
+
+#to enable scripts uncomment nonstandard here this overrides IsStandard() to return true
+#nonstandard=1
+
+# set MAX_MONEY that can be created by minners, limit seems to be no smaller than 50 , in this case 21 billion
+#max_money=21000000
+
+
+#custom inflation active setting to change inflation rate over different block ranges
+custom_inflation=1
+
+#Subsidy value is what is paid when a new block is found default is 50 and pre inflation block rate if custom_inflation set
+# in this example we will create 10 million coins in each of the first 10 blocks to be held by "The Trust"
+#Subsidy_small value is the raw int value of the subsidy NOT muliplied by the value of COIN that is 100000000
+#Subsidy_small value is added to Subsidy, both of these values must be intergers 
+Subsidy=96
+#Subsidy_small=0
+
+
+# pszTimestamp  as seen on front page of New York Times paper to be used here for beerA
+#pszTimestamp=New York Times page1, Aug 1, 2011 President Obama said the accord would “begin to lift the cloud of debt and the cloud of uncertainty that hangs over our economy.”
+pszTimestamp=To see the farm is to leave it
+
+#these values must be with value 0x to the front to make hex format 
+#pbtc block.hashMerkleRoot value
+block_hashMerkleRoot=0xcb3ae7b867c97ceb834c5d131355cd4bc176a44360fede9ed6d47b897397ba3f
+
+#pbtc new genesisblock 
+genesisblock=0x0000000001534ef8893b025b9c1da67250285e35c9f76cae36a4904fdf72c591
+
+#Pbtc new block.ntime  time epoc use date +%s to get this number before you create a new chain beerA
+block_nTime=1304113447
+
+#Pbtc new block.nNonce
+block_nNonce=2245271137
+
+#Pbtc new block.nBits  difficulty setting at time of genisis block creation,
+# this value must be converted to nbits decimal format at this point
+# ixcoin  dDiff dec = 1.0 nBits hex = 1d00ffff nBits dec = 486604799
+block_nBits=486604799
+
+# IRC channel to use if you want something other than #bitcoin or #bitcoinTEST skip adding the # to the name
+irc_channel=ixcoin
+
+# IRC IP address must be in XXX.XXX.XXX.XXX format number this now set to chat.freenode.net for #ixcoin 
+#irc_ip=216.155.130.130
+
+# IRC address used in Tor  can be a dns lookupable address pointing to your irc server
+# this seems to be the one that's being used not the above address
+irc_address=chat.freenode.net
+
+#COINBASE_MATURITY defaults to 100 if changed here will credit minned coins in this number of new blocks 
+#coinbase_maturity=100
+
+#The message start string is designed to be unlikely to occur in normal data.
+#The characters are rarely used upper ascii, not valid as UTF-8, and produce
+# a large 4-byte int at any alignment.
+# measage start string 0 - 3  if not set settings will default to normal settings
+# examples:
+#  namecoin settings in hex
+#\xf9\xbe\xb4\xfe
+#  testnet settings
+#\xfa\xbf\xb5\xda
+#  mainnet settings
+#{ 0xf9, 0xbe, 0xb4, 0xd9 }
+#  weeds settings
+#\xf8\xbf\xb5\xda
+#  beerA settings
+#\xf7\xbf\xb5\xdb
+# ixcoin
+# 0xf9, 0xbe, 0xb4, 0xd9
+pscMessageStart0=249
+pscMessageStart1=190
+pscMessageStart2=180
+pscMessageStart3=217
+
+#scriptPubKey is a big hex string with no 0x at the head, was always the same in bitcoin for testnet and main in namecoin it's changed
+scriptPubKey=04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11984
+
+#ProofOfWorkLimit this sets the minimum value that proof of work can get changed to, it is a right shift value not the real value
+# example bitcoin main default value is 32 and for testnet default is 28, I guess the range would be 0 - 32?
+# I think this would be overrided if Diff_triger_block is set to something other than 0 after the triger block count
+ProofOfWorkLimit=32

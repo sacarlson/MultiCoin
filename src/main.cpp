@@ -1597,7 +1597,8 @@ bool LoadBlockIndex(bool fAllowNew)
             hashGenesisBlock = uint256("0x00000007199508e34a9ff81e6ec0c477a4cccff2a4767a8eee39c11db367b008");
             printf("testnet original hashGenesisBlock assigned for ver 2.20.0 \n");
         }
-        bnProofOfWorkLimit = CBigNum(~uint256(0) >> 28);
+        //bnProofOfWorkLimit = CBigNum(~uint256(0) >> 28);
+        bnProofOfWorkLimit = CBigNum(~uint256(0) >> GetArgIntxx(28,"-ProofOfWorkLimit"));
         pchMessageStart[0] = GetCharArg(0xfa,"-pscMessageStart0");
         pchMessageStart[1] = GetCharArg(0xbf,"-pscMessageStart1");
         pchMessageStart[2] = GetCharArg(0xb5,"-pscMessageStart2");

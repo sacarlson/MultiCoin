@@ -16,17 +16,15 @@ CoinName="[WEEDS]"
 #for this to work you will also have to add the image file names to the bitcoin.qrc file and compile
 WindowIcon=:icons/weeds
 
-# temp change to test multicoin-qt with groupcoin spec add header
 #AddressVersion is the 8 bit (char) 0 - 255 header code appended to the first 8 bits of the send address default is 0 for main 111 for testnet 
-#AddressVerson=244
 AddressVerson=243
 
 dns=1
-#addnode=www.beertokens.info
-addnode=john-edwin-tobey.org
-addnode=li330-128.members.linode.com
+addnode=www.beertokens.info
 addnode=192.168.2.158
 #addnode=69.245.206.209
+addnode=li330-128.members.linode.com
+#addnode=88.077.193.129
 #connect=192.168.2.158
 #noirc=1
 # listen port can now be set to other than 18333 for testnet on proto nets 
@@ -93,7 +91,7 @@ block_nNonce=662750529
 
 # IRC channel to use if you want something other than #bitcoin or #bitcoinTEST skip adding the # to the name
 irc_channel=weeds
-#irc_channel=beertokens
+
 
 # IRC IP address must be in XXX.XXX.XXX.XXX:port format number this now set to card.freenode.net for #weeds for test
 #irc_ip=192.168.2.250:6667
@@ -115,7 +113,7 @@ coinbase_maturity=2
 #The characters are rarely used upper ascii, not valid as UTF-8, and produce
 # a large 4-byte int at any alignment.
 # measage start string 0 - 3  here it's set testnet settings, will default to normal settings
-# example namecoin settings in hex
+# examples namecoin settings in hex
 #\xf9\xbe\xb4\xfe
 #  these are the testnet settings
 #\xfa\xbf\xb5\xda
@@ -136,9 +134,11 @@ pscMessageStart1=191
 pscMessageStart2=181
 pscMessageStart3=218
 
+
 #block number at witch time we start to accept merge mining aux chain proof-of-work
 AuxPowStartBlock=8000
 
 # this chain ID number as with bitcoin chainid=0  namecoin chainid=1, at this point I'm not sure if we should set to 1 or 2 or?
 OurChainID=3
+
 
