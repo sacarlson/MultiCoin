@@ -14,3 +14,4 @@ The master branch is regularly built and tested (by who? need people willing to 
 
 
 Feature branches are created when there are major new features being worked on by several people.
+ 
